@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IOProviderClass</key>
+	<string>IONetworkInterface</string>
+	<key>IOParentMatch</key>
+	<dict>
+		<key>IOPropertyMatch</key>
+		<dict>
+			<key>IOMACAddress</key>
+			<data>0018f3f55751</data>
+		</dict>
+	</dict>
+</dict>
+</plist>

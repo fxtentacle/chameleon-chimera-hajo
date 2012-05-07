@@ -19,9 +19,11 @@
 #include "sl.h"
 
 void addHajoKey(const char* key) {
+    if(key == 0 || strlen(key)<3) return;
+    
     printf("addHajoKey: \"%s\" \n", key);
     sleep(5);
-
+    
     const char *data = getStringForKey(key, &bootInfo->chameleonConfig);
     
     const char* colon = strchr(data, ':');
@@ -56,6 +58,10 @@ void addMiscToDeviceTree(void)
     
     while(curpos < end) {
         const char* space = strchr(curpos, ' ');
+        const char* space2 = strchr(curpos, '\r');
+        const char* space3 = strchr(curpos, '\n');
+        if(space2 != 0 && space2 < space) space = space2;
+        if(space3 != 0 && space3 < space) space = space3;
         if(!space) space = end;
         int len = space - curpos;
         
