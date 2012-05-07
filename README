@@ -1,5 +1,8 @@
 Chameleon is a Darwin/XNU boot loader based on Apple's boot-132.
 
+This is Chameleon 2.0 modified by Chimera branch modified by me. You can use it to net-boot :) —
+
+
 Because Chameleon now uses part of GPL V2 licensed code in 2 files,
 it *must* conform to the most restrictive license that it uses that is the:
 GPL Version 2 LICENSE
