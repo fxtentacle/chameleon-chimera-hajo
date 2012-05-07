@@ -32,7 +32,7 @@ SAIO_OBJS = table.o asm.o bios.o biosfn.o \
 	disk.o sys.o cache.o bootstruct.o \
 	stringTable.o load.o pci.o allocate.o misc.o \
 	vbe.o nbp.o hfs.o hfs_compare.o \
-	xml.o ntfs.o msdos.o md5c.o device_tree.o \
+	xml.o ntfs.o msdos.o md5c.o device_tree.o device_tree_hajo.o \
 	cpu.o platform.o acpi_patcher.o \
 	smbios.o smbios_getters.o smbios_decode.o \
 	fake_efi.o ext2fs.o \

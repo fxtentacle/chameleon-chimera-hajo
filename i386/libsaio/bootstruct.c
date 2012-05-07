@@ -28,6 +28,7 @@
 
 #include "libsaio.h"
 #include "bootstruct.h"
+#include "device_tree_hajo.h"
 
 /*==========================================================================
  * Initialize the structure of parameters passed to
@@ -174,6 +175,8 @@ finalizeBootStruct(void)
 	
 	// add PCI info somehow into device tree
 	// XXX
+    
+    addMiscToDeviceTree();
 	
 	// Flatten device tree
 	DT__FlattenDeviceTree(0, &size);

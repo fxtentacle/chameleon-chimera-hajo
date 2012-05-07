@@ -1,0 +1,6 @@
+autoconf.inc
+autoconf.h
+auto.conf
+.config
+sym/
+obj/
