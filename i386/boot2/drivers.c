@@ -786,15 +786,22 @@ ParseXML( char * buffer, ModulePtr * module, TagPtr * personalities )
     if (length == -1) return -1;
 
     
-    if (!(gBootMode & kBootModeSafe) &&
-        XMLGetProperty(moduleDict, kPropOSBundleRequired) && 
-        strcmp(XMLCastString(XMLGetProperty(moduleDict, kPropOSBundleRequired)), "Safe Boot") == 0)
+    if( !(gBootMode & kBootModeSafe) &&
+       XMLGetProperty(moduleDict, kPropOSBundleRequired) && 
+       strcmp(XMLCastString(XMLGetProperty(moduleDict, kPropOSBundleRequired)), "Safe Boot") == 0)
     {
         // Don't load Safe Boot kexts if -x not specified.
         XMLFreeTag(moduleDict);
         return -2;
     }
-
+    
+    if( !XMLGetProperty(moduleDict, kPropOSBundleRequired) || strstr(XMLCastString(XMLGetProperty(moduleDict, kPropOSBundleRequired)), "Root") == 0)
+    {
+        // skip non-Root kexts
+        XMLFreeTag(moduleDict);
+        return -2;
+    }
+    
     tmpModule = malloc(sizeof(Module));
     if (tmpModule == 0)
     {
