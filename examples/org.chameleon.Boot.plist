@@ -5,15 +5,21 @@
 	<key>Boot Banner</key>
 	<string>No</string>
 	<key>GraphicsEnabler</key>
-	<string>Yes</string>
+	<string>No</string>
 	<key>Instant Menu</key>
 	<string>Yes</string>
 	<key>Kernel Flags</key>
-	<string>npci=0x3000 PCIRootUID=1 -v rootpath=nfs:192.168.2.85:/Download:TFTP/bootme.nbi/NetBoot.dmg -rwroot_hack</string>
+	<string>npci=0x3000 PCIRootUID=1 -v  boot-uuid=5C5153D3-640A-37A5-AC9E-A1816D3567A3 kextlog=0xff </string>
+	<key>Kernel Flags DEACTIVATED</key>
+	<string> -rwroot_hack rootpath=nfs:192.168.2.1:/exports:disk.dd </string>
 	<key>Legacy Logo</key>
 	<string>Yes</string>
+	<key>hajo_driver_blacklist</key>
+	<string>IOAHCIBlockStorage</string>
 	<key>hajokeys</key>
-	<string>hk-root-matching</string>
+	<string></string>
+	<key>hajokeys DEACTIVATED</key>
+	<string>hk-net-boot hk-root-matching</string>
 	<key>hk-net-boot</key>
 	<string>/:net-boot=3100</string>
 	<key>hk-root-matching</key>
