@@ -317,9 +317,36 @@ FileLoadDrivers( char * dirSpec, long plugin )
 
         strcat(dirSpec, "Extensions");
     }
+    
+    // load hajo's blacklist
+    const char* lBlacklisted[256];
+    int nBlacklisted = 0;
+    
+    const char *blacklist = getStringForKey("hajo_driver_blacklist", &bootInfo->chameleonConfig);
+    if(blacklist) {
+        printf("hajo_driver_blacklist: \"%s\" \n", blacklist);
+        
+        const char* curpos = blacklist;
+        const char* end = curpos + strlen(blacklist);
+        
+        while(curpos < end) {
+            const char* space = strchr(curpos, ' ');
+            if(!space) space = end;
+            int len = space - curpos;
+            
+            char* buffer = malloc(len+1);
+            strncpy(buffer, curpos, len);
+            buffer[len] = 0;
+            
+            lBlacklisted[nBlacklisted++] = buffer;
+            curpos = space+1;
+        }
+    }
+
 
     index = 0;
     while (1) {
+        int i;
         ret = GetDirEntry(dirSpec, &index, &name, &flags, &time);
         if (ret == -1) break;
 
@@ -329,6 +356,16 @@ FileLoadDrivers( char * dirSpec, long plugin )
         // Make sure this is a kext.
         length = strlen(name);
         if (strcmp(name + length - 5, ".kext")) continue;
+        
+        // Make sure it's not blacklisted
+        bool blacklisted = false;
+        for(i=0;i<nBlacklisted;i++) {
+            if(strstr(name, lBlacklisted[i])) {
+                blacklisted = true; 
+                printf("KEXT \"%s\" is blacklisted by keyword  \"%s\" \n", name, lBlacklisted[i]);
+            }
+        }
+        if(blacklisted) continue;
 
         // Save the file name.
         strcpy(gFileName, name);

@@ -51,6 +51,8 @@ void addHajoKey(const char* key) {
 void addMiscToDeviceTree(void)
 {
     const char *hajokeys = getStringForKey("hajokeys", &bootInfo->chameleonConfig);
+    if(!hajokeys) return;
+    
     printf("hajokeys: \"%s\" \n", hajokeys);
   
     const char* curpos = hajokeys;
