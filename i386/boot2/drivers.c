@@ -325,6 +325,7 @@ FileLoadDrivers( char * dirSpec, long plugin )
     const char *blacklist = getStringForKey("hajo_driver_blacklist", &bootInfo->chameleonConfig);
     if(blacklist) {
         printf("hajo_driver_blacklist: \"%s\" \n", blacklist);
+        //sleep(5);
         
         const char* curpos = blacklist;
         const char* end = curpos + strlen(blacklist);
@@ -363,6 +364,7 @@ FileLoadDrivers( char * dirSpec, long plugin )
             if(strstr(name, lBlacklisted[i])) {
                 blacklisted = true; 
                 printf("KEXT \"%s\" is blacklisted by keyword  \"%s\" \n", name, lBlacklisted[i]);
+                sleep(5);
             }
         }
         if(blacklisted) continue;
