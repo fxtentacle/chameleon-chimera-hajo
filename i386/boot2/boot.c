@@ -145,8 +145,9 @@ static int ExecKernel(void *binary)
 	setupFakeEfi();
 	
 	// Load boot drivers from the specifed root path.
-	//if (!gHaveKernelCache)
-	LoadDrivers("/");
+    // hajo: uncomment if, because i generate prelinked kernel by hand
+	if (!gHaveKernelCache)
+        LoadDrivers("/");
 	
 	execute_hook("DriversLoaded", (void*)binary, NULL, NULL, NULL);
 	
@@ -494,7 +495,7 @@ void common_boot(int biosdev)
 					val++;
 				}
 				strlcpy(gBootKernelCacheFile, val, len + 1);
-                printf("Using kernel cache: %s\n", gBootKernelCacheFile);
+                printf("Using kernel cache: \"%s\" \n", gBootKernelCacheFile);
                 sleep(5);
 			}
 			else {
@@ -549,6 +550,7 @@ void common_boot(int biosdev)
 		verbose("Loading Darwin %s\n", gMacOSVersion);
 		
 		if (trycache) do {
+            printf("bootInfo->bootFile: \"%s\" \n", bootInfo->bootFile);
 			ret = GetFileInfo(NULL, bootInfo->bootFile, &flags, &kerneltime);
 			if (ret != 0) kerneltime = 0;
 			else if ((flags & kFileTypeMask) != kFileTypeFlat) {
@@ -558,10 +560,19 @@ void common_boot(int biosdev)
 			}
 			
 			ret = GetFileInfo(NULL, gBootKernelCacheFile, &flags, &cachetime);
-			if ((ret != 0) || ((flags & kFileTypeMask) != kFileTypeFlat)
-				|| (cachetime < kerneltime)) {
+			if ((ret != 0)) {
 				trycache = 0;
-                printf("trycache0 : 2\n");
+                printf("trycache0 : 2.1 \"%s\" \n", gBootKernelCacheFile);
+				break;
+			}
+			else if ( ((flags & kFileTypeMask) != kFileTypeFlat) ) {
+				trycache = 0;
+                printf("trycache0 : 2.2\n");
+				break;
+			}
+			else if ( (cachetime < kerneltime) ) {
+				trycache = 0;
+                printf("trycache0 : 2.3\n");
 				break;
 			}
 			
