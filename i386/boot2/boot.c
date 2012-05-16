@@ -495,8 +495,8 @@ void common_boot(int biosdev)
 					val++;
 				}
 				strlcpy(gBootKernelCacheFile, val, len + 1);
-                printf("Using kernel cache: \"%s\" \n", gBootKernelCacheFile);
-                sleep(5);
+                verbose("Using kernel cache: \"%s\" \n", gBootKernelCacheFile);
+                //sleep(5);
 			}
 			else {
 				// Lion and Mountain Lion prelink kernel cache file␊
@@ -545,34 +545,34 @@ void common_boot(int biosdev)
 					(gMKextName[0] == '\0') &&
 					(gBootKernelCacheFile[0] != '\0'));
         
-        printf("trycache: %d\n", trycache);
+        verbose("trycache: %d\n", trycache);
 		
 		verbose("Loading Darwin %s\n", gMacOSVersion);
 		
 		if (trycache) do {
-            printf("bootInfo->bootFile: \"%s\" \n", bootInfo->bootFile);
+            verbose("bootInfo->bootFile: \"%s\" \n", bootInfo->bootFile);
 			ret = GetFileInfo(NULL, bootInfo->bootFile, &flags, &kerneltime);
 			if (ret != 0) kerneltime = 0;
 			else if ((flags & kFileTypeMask) != kFileTypeFlat) {
 				trycache = 0;
-                printf("trycache0 : 1\n");
+                verbose("trycache0 : 1\n");
 				break;
 			}
 			
 			ret = GetFileInfo(NULL, gBootKernelCacheFile, &flags, &cachetime);
 			if ((ret != 0)) {
 				trycache = 0;
-                printf("trycache0 : 2.1 \"%s\" \n", gBootKernelCacheFile);
+                verbose("trycache0 : 2.1 \"%s\" \n", gBootKernelCacheFile);
 				break;
 			}
 			else if ( ((flags & kFileTypeMask) != kFileTypeFlat) ) {
 				trycache = 0;
-                printf("trycache0 : 2.2\n");
+                verbose("trycache0 : 2.2\n");
 				break;
 			}
 			else if ( (cachetime < kerneltime) ) {
 				trycache = 0;
-                printf("trycache0 : 2.3\n");
+                verbose("trycache0 : 2.3\n");
 				break;
 			}
 			
@@ -580,7 +580,7 @@ void common_boot(int biosdev)
 			if ((ret == 0) && ((flags & kFileTypeMask) == kFileTypeDirectory)
 				&& (cachetime < exttime)) {
 				trycache = 0;
-                printf("trycache0 : 3\n");
+                verbose("trycache0 : 3\n");
 				break;
 			}
 			
@@ -590,12 +590,12 @@ void common_boot(int biosdev)
 			
 			if (ret == 0 && cachetime < (exttime + 1)) {
 				trycache = 0;
-                printf("trycache0 : 4\n");
+                verbose("trycache0 : 4\n");
 				break;
 			}
 		} while (0);
 
-        sleep(5);
+        // sleep(5);
 
 		do {
 			if (trycache) {
