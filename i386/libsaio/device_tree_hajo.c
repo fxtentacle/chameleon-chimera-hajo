@@ -21,8 +21,8 @@
 void addHajoKey(const char* key) {
     if(key == 0 || strlen(key)<3) return;
     
-    printf("addHajoKey: \"%s\" \n", key);
-    sleep(5);
+    verbose("addHajoKey: \"%s\" \n", key);
+    //sleep(5);
     
     const char *data = getStringForKey(key, &bootInfo->chameleonConfig);
     
@@ -40,7 +40,7 @@ void addHajoKey(const char* key) {
     int len = 0;
     const char* attributeValue = convertHexStr2Binary(equal+1, &len);
     
-    printf("in node \"%s\" set property \"%s\" to \"%s\" \n", nodePath, attributeName, attributeValue);
+    verbose("in node \"%s\" set property \"%s\" to \"%s\" \n", nodePath, attributeName, attributeValue);
     
  	Node* node = DT__FindNode(nodePath, true);
 	if (node == 0) stop("Couldn't find/add node");
@@ -53,7 +53,7 @@ void addMiscToDeviceTree(void)
     const char *hajokeys = getStringForKey("hajokeys", &bootInfo->chameleonConfig);
     if(!hajokeys) return;
     
-    printf("hajokeys: \"%s\" \n", hajokeys);
+    verbose("hajokeys: \"%s\" \n", hajokeys);
   
     const char* curpos = hajokeys;
     const char* end = curpos + strlen(hajokeys);
@@ -75,5 +75,5 @@ void addMiscToDeviceTree(void)
         curpos = space+1;
     }
     
-    sleep(5);
+    //sleep(5);
 }
