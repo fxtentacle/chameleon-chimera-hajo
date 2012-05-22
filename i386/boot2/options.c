@@ -432,7 +432,7 @@ static int updateMenu( int key, void ** paramPtr )
 				gui.menu.draw = false;
 			else
 			{
-                bool shouldAddBootUuid = true;
+                bool shouldAddBootUuid = false;
                 
 				shouldboot = ( res != DO_NOT_BOOT );
 				
@@ -444,19 +444,20 @@ static int updateMenu( int key, void ** paramPtr )
 					case BOOT_NORMAL:
 						gVerboseMode = false;
 						gBootMode = kBootModeNormal;
+                        shouldAddBootUuid = true;
                         break;
 						
 					case BOOT_VERBOSE:
 						gVerboseMode = true;
 						gBootMode = kBootModeNormal;
 						addBootArg(kVerboseModeFlag);
+                        shouldAddBootUuid = true;
 						break;
 						
 					case BOOT_NO_BOOT_UUID:
 						gVerboseMode = true;
 						gBootMode = kBootModeNormal;
 						addBootArg(kVerboseModeFlag);
-                        shouldAddBootUuid = false;
 						break;
 						
 					case BOOT_RESERVED:
