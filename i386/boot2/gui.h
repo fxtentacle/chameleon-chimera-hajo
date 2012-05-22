@@ -21,8 +21,8 @@
 
 #define BOOT_NORMAL			0
 #define BOOT_VERBOSE		1
-#define BOOT_IGNORECACHE	2
-#define BOOT_SINGLEUSER		3
+#define BOOT_NO_BOOT_UUID	2
+#define BOOT_RESERVED		3
 #define DO_NOT_BOOT			4
 #define CLOSE_INFO_MENU		5
 

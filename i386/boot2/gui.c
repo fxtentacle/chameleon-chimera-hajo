@@ -146,8 +146,8 @@ menuitem_t infoMenuItems[] =
 {
 	{ .text = "Boot" },
 	{ .text = "Boot Verbose" },
-	{ .text = "Boot Ignore Caches" },
-	{ .text = "Boot Single User" },
+	{ .text = "Boot No Boot UUID" },
+	{ .text = "Boot --" },
 	{ .text = "Memory Info" },
 	{ .text = "Video Info" },
 	{ .text = "Help" }

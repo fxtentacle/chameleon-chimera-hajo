@@ -442,6 +442,17 @@ static int updateMenu( int key, void ** paramPtr )
 					case BOOT_NORMAL:
 						gVerboseMode = false;
 						gBootMode = kBootModeNormal;
+                        
+                        {
+                            char tmp[512];
+                            const char* val;
+                            int cnt;
+                            if(getValueForKey("hajobootuuid", &val, &cnt, &bootInfo->chameleonConfig)) {
+                                strncpy(tmp, val, cnt);
+                                tmp[cnt] = 0;
+                                addBootArg(tmp);
+                            }
+                        } 
 						break;
 						
 					case BOOT_VERBOSE:
@@ -450,16 +461,16 @@ static int updateMenu( int key, void ** paramPtr )
 						addBootArg(kVerboseModeFlag);
 						break;
 						
-					case BOOT_IGNORECACHE:
-						gVerboseMode = false;
+					case BOOT_NO_BOOT_UUID:
+						gVerboseMode = true;
 						gBootMode = kBootModeNormal;
 						addBootArg(kIgnoreCachesFlag);
 						break;
 						
-					case BOOT_SINGLEUSER:
-						gVerboseMode = true;
+					case BOOT_RESERVED:
+						gVerboseMode = false;
 						gBootMode = kBootModeNormal;
-						addBootArg(kSingleUserModeFlag);
+//						addBootArg(kSingleUserModeFlag);
 						break;
 				}
 				
