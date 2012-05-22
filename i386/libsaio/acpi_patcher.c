@@ -581,7 +581,7 @@ struct acpi_2_ssdt *generate_pss_ssdt(struct acpi_2_dsdt* dsdt)
 							uint8_t i;
 							p_states_count = 0;
 							
-							for (i = maximum.Control; i >= minimum.Control; i--) 
+							for (i = minimum.Control; i <= maximum.Control; i++) 
 							{
 								p_states[p_states_count].Control = i;
 								p_states[p_states_count].CID = p_states[p_states_count].Control << 1;
@@ -615,7 +615,7 @@ struct acpi_2_ssdt *generate_pss_ssdt(struct acpi_2_dsdt* dsdt)
 							uint8_t i;
 							p_states_count = 0;
 							
-							for (i = maximum.Control; i >= minimum.Control; i--) 
+							for (i = minimum.Control; i <= maximum.Control; i++) 
 							{
 								p_states[p_states_count].Control = i;
 								p_states[p_states_count].CID = p_states[p_states_count].Control << 1;
