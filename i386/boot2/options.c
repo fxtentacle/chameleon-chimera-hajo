@@ -432,6 +432,8 @@ static int updateMenu( int key, void ** paramPtr )
 				gui.menu.draw = false;
 			else
 			{
+                bool shouldAddBootUuid = true;
+                
 				shouldboot = ( res != DO_NOT_BOOT );
 				
 				if ( shouldboot )
@@ -442,18 +444,7 @@ static int updateMenu( int key, void ** paramPtr )
 					case BOOT_NORMAL:
 						gVerboseMode = false;
 						gBootMode = kBootModeNormal;
-                        
-                        {
-                            char tmp[512];
-                            const char* val;
-                            int cnt;
-                            if(getValueForKey("hajobootuuid", &val, &cnt, &bootInfo->chameleonConfig)) {
-                                strncpy(tmp, val, cnt);
-                                tmp[cnt] = 0;
-                                addBootArg(tmp);
-                            }
-                        } 
-						break;
+                        break;
 						
 					case BOOT_VERBOSE:
 						gVerboseMode = true;
@@ -464,7 +455,8 @@ static int updateMenu( int key, void ** paramPtr )
 					case BOOT_NO_BOOT_UUID:
 						gVerboseMode = true;
 						gBootMode = kBootModeNormal;
-						addBootArg(kIgnoreCachesFlag);
+						addBootArg(kVerboseModeFlag);
+                        shouldAddBootUuid = false;
 						break;
 						
 					case BOOT_RESERVED:
@@ -474,6 +466,16 @@ static int updateMenu( int key, void ** paramPtr )
 						break;
 				}
 				
+                if(shouldAddBootUuid) {
+                    char tmp[512];
+                    const char* val;
+                    int cnt;
+                    if(getValueForKey("hajobootuuid", &val, &cnt, &bootInfo->chameleonConfig)) {
+                        strncpy(tmp, val, cnt);
+                        tmp[cnt] = 0;
+                        addBootArg(tmp);
+                    }
+                }
 			}
 			
 		}	
