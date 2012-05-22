@@ -581,7 +581,7 @@ struct acpi_2_ssdt *generate_pss_ssdt(struct acpi_2_dsdt* dsdt)
 							uint8_t i;
 							p_states_count = 0;
 							
-							for (i = minimum.Control; i <= maximum.Control; i++) 
+							for (i = maximum.Control; i >= minimum.Control; i--) 
 							{
 								p_states[p_states_count].Control = i;
 								p_states[p_states_count].CID = p_states[p_states_count].Control << 1;
@@ -615,7 +615,7 @@ struct acpi_2_ssdt *generate_pss_ssdt(struct acpi_2_dsdt* dsdt)
 							uint8_t i;
 							p_states_count = 0;
 							
-							for (i = minimum.Control; i <= maximum.Control; i++) 
+							for (i = maximum.Control; i >= minimum.Control; i--) 
 							{
 								p_states[p_states_count].Control = i;
 								p_states[p_states_count].CID = p_states[p_states_count].Control << 1;
@@ -652,8 +652,8 @@ struct acpi_2_ssdt *generate_pss_ssdt(struct acpi_2_dsdt* dsdt)
 									aml_add_dword(pstt, 0x00000000); // Power
 									aml_add_dword(pstt, 0x0000000A); // Latency
 									aml_add_dword(pstt, 0x0000000A); // Latency
-									aml_add_dword(pstt, p_states[i].Control);
-									aml_add_dword(pstt, i+1); // Status
+									aml_add_dword(pstt, p_states[i].Control );
+									aml_add_dword(pstt, p_states[i].Control ); // Status
 								}
 				
 			// Add aliaces
