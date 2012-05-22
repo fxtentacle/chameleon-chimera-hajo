@@ -596,11 +596,16 @@ struct acpi_2_ssdt *generate_pss_ssdt(struct acpi_2_dsdt* dsdt)
 					case CPU_MODEL_IVYBRIDGE:	// Intel Core i3, i5, i7 LGA1155 (22nm)
 					case CPU_MODEL_JAKETOWN:	// Intel Core i7, Xeon E5 LGA2011 (32nm)
 					{
+                        int hajo_maximum_control;
 						msr = rdmsr64(MSR_IA32_PERF_STATUS);
 						initial.Control = bitfield(msr, 15, 8);
 						msr = rdmsr64(MSR_IA32_PERF_STATUS);
 						maximum.Control = bitfield(msr, 15, 8);
 						minimum.Control = (rdmsr64(MSR_PLATFORM_INFO) >> 40) & 0xff;
+                        
+                        if(getIntForKey("hajo_maximum_control", &hajo_maximum_control, &bootInfo->chameleonConfig)) {
+                            maximum.Control = hajo_maximum_control;
+                        }
 						
 						verbose("P-States: min %d, max %d\n", minimum.Control, maximum.Control);
 						
