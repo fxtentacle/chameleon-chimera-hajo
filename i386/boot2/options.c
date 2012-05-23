@@ -32,6 +32,9 @@
 
 bool showBootBanner = true; //Azi:showinfo
 static bool shouldboot = false;
+static bool shouldAddBootUuid = true;
+
+
 
 extern int multiboot_timeout;
 extern int multiboot_timeout_set;
@@ -432,8 +435,6 @@ static int updateMenu( int key, void ** paramPtr )
 				gui.menu.draw = false;
 			else
 			{
-                bool shouldAddBootUuid = false;
-                
 				shouldboot = ( res != DO_NOT_BOOT );
 				
 				if ( shouldboot )
@@ -458,25 +459,16 @@ static int updateMenu( int key, void ** paramPtr )
 						gVerboseMode = true;
 						gBootMode = kBootModeNormal;
 						addBootArg(kVerboseModeFlag);
+                        shouldAddBootUuid = false;
 						break;
 						
 					case BOOT_RESERVED:
 						gVerboseMode = false;
 						gBootMode = kBootModeNormal;
 //						addBootArg(kSingleUserModeFlag);
+                        shouldAddBootUuid = false;
 						break;
 				}
-				
-                if(shouldAddBootUuid) {
-                    char tmp[512];
-                    const char* val;
-                    int cnt;
-                    if(getValueForKey("hajobootuuid", &val, &cnt, &bootInfo->chameleonConfig)) {
-                        strncpy(tmp, val, cnt);
-                        tmp[cnt] = 0;
-                        addBootArg(tmp);
-                    }
-                }
 			}
 			
 		}	
@@ -1071,7 +1063,20 @@ done:
 		free(menuItems);
 		menuItems = NULL;
 	}
-	return 0;
+    
+    if(shouldAddBootUuid) {
+        char tmp[512];
+        const char* val;
+        int cnt;
+        if(getValueForKey("hajobootuuid", &val, &cnt, &bootInfo->chameleonConfig)) {
+            strncpy(tmp, val, cnt);
+            tmp[cnt] = 0;
+            addBootArg(tmp);
+        }
+    }
+    shouldAddBootUuid = true;
+	
+    return 0;
 }
 
 //==========================================================================
